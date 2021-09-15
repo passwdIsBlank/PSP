@@ -2,10 +2,10 @@ package agenda;
 
 public class Contacto {
 	
-	String nombre;
-	String apellidos;
-	String dni;
-	String telefono;
+	private String nombre;
+	private String apellidos;
+	private String dni;
+	private String telefono;
 	
 	public Contacto(String nombre, String apellidos, String dni, String telefono) {
 		this.nombre = nombre;

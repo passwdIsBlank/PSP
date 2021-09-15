@@ -12,18 +12,23 @@ public class Agenda {
 	}
 
 	public boolean AddContacto(String nombre, String apellidos, String dni, String telefono) {
+		
+		// Letras y espacios MAX 20 carácteres
 		Pattern pNombre = Pattern.compile("^[A-Z ?]{0,20}$", 2);
+		// Letras y espacios MAX 30 carácteres
 		Pattern pApellidos = Pattern.compile("^[A-Z ?]{0,30}$", 2);
+		// 8 números y 1 letra
 		Pattern pDni = Pattern.compile("^[0-9]{8}[A-Z]{1}$", 2);
+		// Empieza con 6 ó 7 seguido de 8 números del 0-9
+		Pattern pTelefono = Pattern.compile("^[67][0-9]{8}$");
 		
 		final char [] letras = {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
 		
-		// Empieza con 6 ó 7 + 8 números del 0-9
-		Pattern pTelefono = Pattern.compile("^[67][0-9]{8}$");
-		
 		boolean valido = false;
 		
+		// Comprobar si cumplen los filtros
 		if (pNombre.matcher(nombre).matches() && pApellidos.matcher(apellidos).matches() && pDni.matcher(dni).matches() && pTelefono.matcher(telefono).matches()) {
+			
 			// Comprobar letra, DNI número % 23 = indice del 0-22 el cual corresponde a la letra del array de letras
 			int indiceDni = Integer.parseInt(dni.substring(0, 8)) % 23;
 			
@@ -34,6 +39,7 @@ public class Agenda {
 			else System.out.println("Letra del DNI inválida");
 		}
 		return valido;
+		
 	}
 	
 	public void mostrarAgenda() {
@@ -82,18 +88,17 @@ public class Agenda {
 				do {
 					String nombre, apellidos, dni, telefono;
 					
-					System.out.print("\rIntroduce el nombre: ");
+					System.out.print("\rIntroduce el nombre (MAX length [20]): ");
 					nombre = sc.nextLine();
-					System.out.print("Introduce los apellidos: ");
+					System.out.print("Introduce los apellidos (MAX length [20]): ");
 					apellidos = sc.nextLine();
 					System.out.print("Introduce el dni: ");
 					dni = sc.nextLine();
-					System.out.print("Introduce el telefono: ");
+					System.out.print("Introduce el telefono (MAX length [9], 1er número 6 ó 7): ");
 					telefono = sc.nextLine();
 					
 					
-					if (agenda.AddContacto(nombre, apellidos, dni, telefono)) System.out.flush();
-					else System.out.println("Datos inválidos");
+					if (!agenda.AddContacto(nombre, apellidos, dni, telefono)) System.out.println("Datos inválidos");
 					
 					System.out.println("\r\rQuieres introducir otro? [s/N]");
 					if (sc.nextLine().equalsIgnoreCase("S")) continuar = true;

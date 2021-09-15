@@ -1,5 +1,7 @@
 package agenda;
 
+import java.util.regex.Pattern;
+
 public class Contacto {
 	
 	private String nombre;

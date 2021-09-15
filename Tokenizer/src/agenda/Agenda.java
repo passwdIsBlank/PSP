@@ -16,15 +16,22 @@ public class Agenda {
 		Pattern pApellidos = Pattern.compile("^[A-Z ?]{0,30}$", 2);
 		Pattern pDni = Pattern.compile("^[0-9]{8}[A-Z]{1}$", 2);
 		
+		final char [] letras = {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
+		
 		// Empieza con 6 ó 7 + 8 números del 0-9
 		Pattern pTelefono = Pattern.compile("^[67][0-9]{8}$");
 		
 		boolean valido = false;
 		
 		if (pNombre.matcher(nombre).matches() && pApellidos.matcher(apellidos).matches() && pDni.matcher(dni).matches() && pTelefono.matcher(telefono).matches()) {
-			valido = true;
-			this.contactos.add(new Contacto(nombre, apellidos, dni, telefono));
+			// Comprobar letra, DNI número % 23 = indice del 0-22 el cual corresponde a la letra del array de letras
+			int indiceDni = Integer.parseInt(dni.substring(0, 8)) % 23;
 			
+			if ( Character.compare(letras[indiceDni], dni.charAt(8)) == 0 ) {
+				valido = true;
+				this.contactos.add(new Contacto(nombre, apellidos, dni, telefono));
+			}
+			else System.out.println("Letra del DNI inválida");
 		}
 		return valido;
 	}

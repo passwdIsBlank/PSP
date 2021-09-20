@@ -2,9 +2,9 @@ import java.util.Scanner;
 import java.math.*;
 
 public class Ecuacion {
-	private int a, b, c;
+	private double a, b, c;
 
-	public Ecuacion(int a, int b, int c) {
+	public Ecuacion(double a, double b, double c) {
 		this.a = a;
 		this.b = b;
 		this.c = c;
@@ -15,9 +15,9 @@ public class Ecuacion {
 			
 			validarEcuacion();
 			// RESULT 1
-			System.out.printf("x1: %f\r", ((this.a * -1) + Math.sqrt((Math.pow(b, 2) - (4 * this.a * this.c)))) / (2 * this.a));
+			System.out.printf("x1: %f\r", (-this.b + ( Math.sqrt((this.b * this.b)-(4 * this.a * this.c)))/(2 * this.a)));
 			// RESULT 2
-			System.out.printf("x2: %f\r", ((this.a * -1) - Math.sqrt((Math.pow(b, 2) - (4 * this.a * this.c)))) / (2 * this.a));
+			System.out.printf("x2: %f\r", (-this.b - ( Math.sqrt((this.b * this.b)-(4 * this.a * this.c)))/(2 * this.a)));
 			
 		} catch (ExcepcionesEcuacion e) {
 			System.out.println("********************************************");
@@ -44,7 +44,7 @@ public class Ecuacion {
 			
 		} while (!isNumber(a) && !isNumber(b) && !isNumber(c));
 		
-		Ecuacion ecuacion = new Ecuacion(Integer.parseInt(a), Integer.parseInt(b), Integer.parseInt(c));
+		Ecuacion ecuacion = new Ecuacion(Double.parseDouble(a), Double.parseDouble(b), Double.parseDouble(c));
 		
 		System.out.println("********************************************");
 		System.out.printf("            %s\r", ecuacion.toString());
@@ -70,7 +70,7 @@ public class Ecuacion {
 	
 	public static boolean isNumber(String number) {
 		try {
-			Integer.parseInt(number);
+			Double.parseDouble(number);
 		} catch (NumberFormatException e) {
 			return false;
 		}

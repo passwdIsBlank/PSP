@@ -19,8 +19,8 @@ public class EtiquetaThread implements Runnable {
 				Thread.sleep(2000);
 				Color color = new Color( (int) ((Math.random() * 255) + 1), (int) ((Math.random() * 255) + 1), (int) ((Math.random() * 255) + 1));
 				this.etiqueta.setForeground(color);
-			} catch (Exception e) {
-				e.getMessage();
+			} catch (InterruptedException e) {
+				System.out.printf("El hilo %s ha terminado\r", Thread.currentThread().getName());
 			}
 		}
 	}

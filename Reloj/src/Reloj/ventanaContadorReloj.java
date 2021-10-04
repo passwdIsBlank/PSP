@@ -17,7 +17,7 @@ public class ventanaContadorReloj extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JLabel labelReloj, label1, label2;
 	private JButton btnIniciar, btnPausar, btnParar, btnReiniciar, btnSalir;
-	private Thread t1;
+	private Thread t1 = new Thread();
 	private Thread t2;
 	private Thread t3;
 
@@ -76,19 +76,18 @@ public class ventanaContadorReloj extends JFrame implements ActionListener {
 		contentPane.add(btnSalir);
 		
 		//Iniciar Threads
-		this.t1 = new Thread(new RelojThread(this.labelReloj));
 		this.t2 = new Thread(new EtiquetaThread(this.label1));
 		this.t3 = new Thread(new EtiquetaThread(this.label2));
 		
 		this.t2.setPriority(1);
 		this.t3.setPriority(1);
 		
-		this.t1.setName("T-Reloj");
 		this.t2.setName("T-label1");
 		this.t3.setName("T-label2");
 		
 		this.t2.start();
 		this.t3.start();
+		
 	}
 
 	/**
@@ -114,8 +113,17 @@ public class ventanaContadorReloj extends JFrame implements ActionListener {
 		//TODO implementar funcionalidad
 		if (e.getSource() == this.btnIniciar) {
 			
-			if(this.t1.isAlive()) this.t1.resume();
-			else this.t1.start();
+			try {
+				if(this.t1.isAlive()) this.t1.resume();
+				else {
+					this.t1 = new Thread(new RelojThread(this.labelReloj));
+					this.t1.setName("T-Reloj");
+					this.t1.start();
+				}
+				
+			} catch(Exception ex) {
+				System.out.println(this.t1.getClass());
+			}
 			
 			this.btnPausar.setEnabled(true);
 			this.btnParar.setEnabled(true);
@@ -135,7 +143,7 @@ public class ventanaContadorReloj extends JFrame implements ActionListener {
 		
 		} else if (e.getSource() == this.btnReiniciar) {
 			
-			
+			RelojThread.reiniciar();
 			
 		} else if (e.getSource() == this.btnSalir) {
 			
